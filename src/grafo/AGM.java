@@ -13,7 +13,7 @@ public class AGM {
 		Grafo nuevoGrafo = new Grafo(g.tamanio());
 		PriorityQueue<Arista> pq = new PriorityQueue<>(Comparator.comparingInt(Arista::getPeso));
 		vertices.add(0);
-		pq.addAll(g.getVecinos(0));
+		pq.addAll(g.getAristasVecinos(0));
 
 		while (vertices.size() < g.tamanio()) {
 			Arista aristaPesoMin = pq.poll();
@@ -22,7 +22,7 @@ public class AGM {
 				nuevoGrafo.agregarArista(aristaPesoMin);
 				vertices.add(aristaPesoMin.getDestino());
 
-				for (Arista arista : g.getVecinos(aristaPesoMin.getDestino())) {
+				for (Arista arista : g.getAristasVecinos(aristaPesoMin.getDestino())) {
 					if (!vertices.contains(arista.getDestino())) {
 						pq.offer(arista);
 					}

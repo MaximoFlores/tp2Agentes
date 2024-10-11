@@ -1,13 +1,13 @@
 package grafo;
 
-class Arista implements Comparable<Arista> {
+public class Arista implements Comparable<Arista> {
 
 	private final int origen;
 	private final int destino;
 	private final int peso;
 
 	public Arista(int i, int j, int peso) {
-		//	        verificarParametros(i,j,peso);
+		verificarParametros(i,j,peso);
 		this.origen = i;
 		this.destino = j;
 		this.peso = peso;

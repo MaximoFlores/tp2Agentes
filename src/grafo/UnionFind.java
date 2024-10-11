@@ -1,7 +1,7 @@
 
 package grafo;
 
-public class UnionFind {
+class UnionFind {
 
 	private int[] parent;
 	private int[] grade;

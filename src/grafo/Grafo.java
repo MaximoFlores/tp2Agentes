@@ -16,14 +16,31 @@ public class Grafo {
 		}
 	}
 
-	public void agregarArista(int i, int j, int peso) {
-		this.vecinos.get(i).add(new Arista(i, j, peso));
-		this.vecinos.get(j).add(new Arista(j, i, peso));
-	}
-
 	public void agregarArista(Arista arista) {
 		this.vecinos.get(arista.getOrigen()).add(arista);
-		this.vecinos.get(arista.getDestino()).add(new Arista(arista.getDestino(), arista.getOrigen(), arista.getPeso()));
+		Arista aristaInv = new Arista(arista.getDestino(), arista.getOrigen(), arista.getPeso());
+		this.vecinos.get(arista.getDestino()).add(aristaInv);
+	}
+
+	public void eliminarArista(int i, int j) {
+		this.vecinos.get(i).removeIf(Arista -> Arista.getDestino() == j);
+		this.vecinos.get(j).removeIf(Arista -> Arista.getDestino() == i);
+	}
+
+	public void modArista(Arista ar) {
+		eliminarArista(ar.getOrigen(), ar.getDestino());
+		agregarArista(ar);
+	}
+
+	public void agregarVertice() {
+		this.vecinos.add(new HashSet<Arista>());
+	}
+	
+	public void eliminarVertice(int vert) {
+		this.vecinos.remove(vert);
+		for (HashSet<Arista> arista : vecinos) {
+			arista.removeIf(Arista -> Arista.getDestino() == vert);
+		}
 	}
 
 	public void mostrarGrafo() {
@@ -35,9 +52,17 @@ public class Grafo {
 			System.out.println("");
 		}
 	}
+	
 
-	public HashSet<Arista> getVecinos(int vert) {
+	public HashSet<Arista> getAristasVecinos(int vert) {
 		return this.vecinos.get(vert);
+	}
+	public HashSet<Integer> getVecinos(int vert){
+		HashSet<Integer> listaVecinos = new HashSet<Integer>();
+		for (Arista arista : this.vecinos.get(vert)) {
+			listaVecinos.add(arista.getDestino());
+		}
+		return listaVecinos;
 	}
 
 	public int tamanio() {
@@ -51,4 +76,5 @@ public class Grafo {
 		}
 		return ret;
 	}
+
 }
