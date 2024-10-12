@@ -10,6 +10,8 @@ import javax.swing.SwingConstants;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
@@ -35,26 +37,11 @@ public class Vista {
 	private JMapViewer map;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Vista window = new Vista();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public Vista() {
 		initialize();
+		frame.setVisible(true);
 	}
 
 	/**
@@ -62,8 +49,10 @@ public class Vista {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 794, 491);
+		frame.setBounds(100, 100, 1020, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
@@ -112,8 +101,12 @@ public class Vista {
 		gbc_content.gridx = 1;
 		gbc_content.gridy = 0;
 		panel.add(content, gbc_content);
-		content.setLayout(new GridLayout(0, 1, 0, 0));
+		content.setLayout(new BorderLayout(0, 0));
 		
-
+		PanelMapa mapaP = new PanelMapa();
+		mapaP.setVisible(true);
+		mapaP.setOpaque(false);
+		content.add(mapaP);
+		
 	}
 }
