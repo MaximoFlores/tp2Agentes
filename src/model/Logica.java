@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.openstreetmap.gui.jmapviewer.Coordinate;
+
 import bfs.BFS;
 import grafo.Grafo;
 import grafo.AGM;
@@ -33,24 +35,26 @@ public class Logica {
 		agentesNombres.remove(vert);
 	}
 
-	public void establecerEnlace(Arista arista) {
-		comprobarLimiteProbabilidad(arista);
-		this.grafo.agregarArista(arista);
+	public void establecerEnlace(int i, int j, int prob) {
+		Arista ar = new Arista(i-1,j-1,prob);
+		comprobarLimiteProbabilidad(ar);
+		this.grafo.agregarArista(ar);
+		System.out.println(ar.toString());
 	}
 
 	public void eliminarEnlace(int i, int j) {
-		this.grafo.eliminarArista(i, j);
-	}
-
-	public void modificarEnlace(Arista arista) {
-		comprobarLimiteProbabilidad(arista);
-		modificarEnlace(arista);
+		this.grafo.eliminarArista(i-1, j-1);
+		System.out.println("arista:" + (i-1) + ", "+(j-1) + " eliminada");
 	}
 
 	private void comprobarLimiteProbabilidad(Arista arista) {
-		if(arista.getPeso()>=100) {
-			throw new IllegalArgumentException("la probabilidad debe de estar entre 0 y 100");
+		if(arista.getPeso()>10) {
+			throw new IllegalArgumentException("la probabilidad debe de estar entre 0 y 10");
 		}
+	}
+	
+	public int tamanioGrafo() {
+		return grafo.tamanio();
 	}
 
 	public void ejecutarPrim() {
@@ -69,15 +73,19 @@ public class Logica {
 		}
 	}
 
-	private void cargarArchivo(File file) throws IOException {
-		try(FileReader fr = new FileReader(file);Scanner sc = new Scanner(fr);) {
+	private void cargarEnlaces(File file) throws IOException {
+		try(FileReader fr = new FileReader("src/model/agentes.txt");Scanner sc = new Scanner(fr);) {
 			int i = 0;
-            while(grafo.tamanio() < i && sc.hasNext()){
+            while(i < grafo.tamanio() && sc.hasNext()){
                 int origen = Integer.parseInt(sc.nextLine());
                 int destino = Integer.parseInt(sc.nextLine()) ;
-                int probabilidad = Integer.parseInt(sc.nextLine());    
+                int probabilidad = Integer.parseInt(sc.nextLine());
+                double coordX = Double.parseDouble(sc.nextLine());
+                double coordY = Double.parseDouble(sc.nextLine());
+                Coordinate coordAgente = new Coordinate(coordX, coordY);
                 
-                establecerEnlace(new Arista(origen,destino,probabilidad));
+                
+                establecerEnlace(origen,destino,probabilidad);
                 
                 sc.nextLine();
                 i++;

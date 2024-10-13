@@ -27,7 +27,7 @@ public class Arista implements Comparable<Arista> {
 
 	@Override
 	public String toString() {
-		return "{d: " + destino + ", p: " + peso + "}";
+		return "{o: "+ origen + ", d: " + destino + ", p: " + peso + "}";
 	}
 
 	public int compareTo(Arista other) {
