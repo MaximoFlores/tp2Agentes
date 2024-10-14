@@ -3,7 +3,12 @@ Vertice(j) <-- (entre 1 y tamanio del grafo)
 Probabilidad(0 - 10)
 Coord(x)
 coord(y)
-// -- Linea Vacia --
+↓↓ tamaño del grafo ↓↓
+10
+↑↑ tamaño del grafo ↑↑
+↓↓ Apellidos de los agentes ↓↓
+Smith,Johnson,Williams,Brown,Jones,García,Miller,Davis,Rodríguez,Martínez
+↑↑ Apellidos de los agentes ↑↑
 1
 2
 2

@@ -19,10 +19,11 @@ public class Logica {
 	Grafo grafoAGM;
 	ArrayList<String> agentesNombres;
 
-	public Logica(int tamanioGrafo) {
-		this.grafo = new Grafo(tamanioGrafo);
+	public Logica() {
+		this.grafo = new Grafo(Archivo.getInstance().getTamGrafo());
 		this.grafoAGM = null;
-		this.agentesNombres = new ArrayList<>();// falta agregar nombres
+		this.agentesNombres = new ArrayList<>();// falta agregar nombres		
+		cargarAristasArchivo();
 	}
 
 	public void añadirEspia(String nombreEsp) {
@@ -41,6 +42,7 @@ public class Logica {
 		this.grafo.agregarArista(ar);
 		System.out.println(ar.toString());
 	}
+	
 
 	public void eliminarEnlace(int i, int j) {
 		this.grafo.eliminarArista(i-1, j-1);
@@ -73,25 +75,14 @@ public class Logica {
 		}
 	}
 
-	private void cargarEnlaces(File file) throws IOException {
-		try(FileReader fr = new FileReader("src/model/agentes.txt");Scanner sc = new Scanner(fr);) {
-			int i = 0;
-            while(i < grafo.tamanio() && sc.hasNext()){
-                int origen = Integer.parseInt(sc.nextLine());
-                int destino = Integer.parseInt(sc.nextLine()) ;
-                int probabilidad = Integer.parseInt(sc.nextLine());
-                double coordX = Double.parseDouble(sc.nextLine());
-                double coordY = Double.parseDouble(sc.nextLine());
-                Coordinate coordAgente = new Coordinate(coordX, coordY);
-                
-                
-                establecerEnlace(origen,destino,probabilidad);
-                
-                sc.nextLine();
-                i++;
-            }
-        } catch (IOException e) {
-        	throw new IOException("No se pudo cargar el archivo");
-        }
-    }
+	private void cargarAristasArchivo() {
+		Archivo archivo = Archivo.getInstance();
+		for (Arista ar : archivo.getAristas()) {
+			establecerEnlace(ar.getOrigen(),ar.getDestino(),ar.getPeso());
+		}
+	}
+	
+	private void cargarNombresEspias() {
+		
+	}
 }
